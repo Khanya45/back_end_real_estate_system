@@ -135,7 +135,7 @@ class clsAgent:
 
 # ADDING THE NEW AGENTS ON THE TABLE
 @app.route('/agent-registration/', methods=["POST"])
-# @cross_origin()
+@cross_origin()
 # @jwt_required()
 def agent_registration():
     response = {}
