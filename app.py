@@ -344,7 +344,7 @@ def filter_by_suburb(suburb):
 
 @app.route('/property-by-listingtype/<type>/')
 @cross_origin()
-def filter_by_type(type):
+def filter_by_listingtype(type):
     response = {}
     with sqlite3.connect("dbFindProperty.db") as conn:
         cursor = conn.cursor()
