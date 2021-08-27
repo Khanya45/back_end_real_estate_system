@@ -698,11 +698,15 @@ def delete_property(id):
                 conn.commit()
 
 
-# description = f'Very Neat 3 bedroom house to rent close to Beaumont Primary School in Morningside Somerset West.\
-#               This tiled family home offers a spacious lounge with fire place, open plan dining area and newly  \
-#               renovated kitchen, 3 bedrooms, 2 with build in cupboards, 2 bathrooms, full family bathroom with  \
-#               separate toilet and main en-suite. Double garage and outside toilet, enclosed garden and is pet friendly \
-#               to maximum of 2 dogs or 2 cats. Walking distance from Beaumont Primary School and Radloff Park Sports Grounds.'
+#
+# description = f' Tenanted Investment!Situated on the high up with commanding views of the Foreshore,\
+#                 West Coast, V&A Waterfront and over to De Waterkant/Green Point. . The views from these apartments \
+#                 are one of the best in Cape Town.This sought after building offers 1 generous size bedroom and bathroom,\
+#                 24 hour security, rooftop swimming pool, 1 secure basement parking with storeroom.\
+#                 Special Features:\
+#                 - Airbnb\
+#                 - Fully Furnished\
+#                 Viewings by appointment only.'
 #
 # with sqlite3.connect('dbFindProperty.db') as conn:
 #             cur = conn.cursor()
@@ -716,14 +720,14 @@ def delete_property(id):
 #                         'listing_type,'
 #                         ' address, '
 #                         'image,'
-#                         'date) VALUES(?,?,?,?,?,?,?)', ("house", description, 15000, "rental", "Morningside", "https://prppublicstore.blob.core.windows.net/live-za-images/property/1469/36/4973469/images/property-4973469-22447277_sd.jpg", date))
+#                         'date) VALUES(?,?,?,?,?,?,?)', ("flats&apartments", description,  1899000, "rental", "804 the sentinel, 148 loop street", "https://prppublicstore.blob.core.windows.net/live-za-images/property/1419/38/7277419/images/property-7277419-56799410_sd.jpg", date))
 #             conn.commit()
 
 
 # with sqlite3.connect('dbFindProperty.db') as conn:
 #             cur = conn.cursor()
-#             cur.execute('SELECT DATE()')
-#             date = cur.fetchone()
+#             cur.execute('SELECT * FROM tblProperty')
+#             date = cur.fetchall()
 #             print(date)
 
 # with sqlite3.connect('dbFindProperty.db') as conn:
