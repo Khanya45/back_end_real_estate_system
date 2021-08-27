@@ -698,16 +698,32 @@ def delete_property(id):
                 conn.commit()
 
 
-#
-# description = f' Tenanted Investment!Situated on the high up with commanding views of the Foreshore,\
-#                 West Coast, V&A Waterfront and over to De Waterkant/Green Point. . The views from these apartments \
-#                 are one of the best in Cape Town.This sought after building offers 1 generous size bedroom and bathroom,\
-#                 24 hour security, rooftop swimming pool, 1 secure basement parking with storeroom.\
-#                 Special Features:\
-#                 - Airbnb\
-#                 - Fully Furnished\
-#                 Viewings by appointment only.'
-#
+@app.route("/filter-by-price/<from_price>/<to_price>/")
+@cross_origin()
+def filter_by_price(from_price, to_price):
+    response = {}
+    with sqlite3.connect("dbFindProperty.db") as conn:
+        cursor = conn.cursor()
+        cursor.execute("SELECT price FROM tblProperty WHERE price BETWEEN" + from_price + "AND" + to_price)
+        properties = cursor.fetchall()
+        response['status_code'] = 200
+        response['data'] = properties
+    return response
+
+
+# description = f' One of two adjacent units, this is ideal townhouse style living in the always popular Upper Green Point area.\
+#                     Multi level lock up and go home perfect for a family or professionals looking for extra space.\
+#                     At 312sqm space in size, this home provides space in all aspects, from the large light filled bedrooms \
+#                     on the top floor, down to the middle level which consists of the open plan kitchen, dining and lounge area that flows out onto \
+#                     the balcony and side yard space that have magnificent views out to the sea and Robben Island beyond.\
+#                     2 Bathrooms on the upper level (Main en-suite) and bonus guest loo on the middle level makes for perfect\
+#                     entertaining downstairs while keeping the privacy upstairs.North facing so plenty of sunlight and potential for \
+#                     cosmetic changes to really make this property pop!Lower level has an entrance way with double garage direct access \
+#                     and plenty of space in front of the garages for further parking.\
+#                     3 Bed\
+#                     2,5 Bath\
+#                     2 Garages'
+# #
 # with sqlite3.connect('dbFindProperty.db') as conn:
 #             cur = conn.cursor()
 #             cur.execute('SELECT DATE()')
@@ -720,7 +736,7 @@ def delete_property(id):
 #                         'listing_type,'
 #                         ' address, '
 #                         'image,'
-#                         'date) VALUES(?,?,?,?,?,?,?)', ("flats&apartments", description,  1899000, "rental", "804 the sentinel, 148 loop street", "https://prppublicstore.blob.core.windows.net/live-za-images/property/1419/38/7277419/images/property-7277419-56799410_sd.jpg", date))
+#                         'date) VALUES(?,?,?,?,?,?,?)', ("townhouse", description,  7495000, "sale", "Green Point", "https://prppublicstore.blob.core.windows.net/live-za-images/property/128/28/6856128/images/property-6856128-137752_dhd.jpg", date))
 #             conn.commit()
 
 
@@ -756,3 +772,5 @@ def delete_property(id):
 #     cursor.execute("SELECT * FROM tblProperty WHERE address LIKE'%"+suburb+"%'")
 #     response["data"] = cursor.fetchall()
 # print(response)
+
+
