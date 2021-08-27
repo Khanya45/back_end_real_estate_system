@@ -335,10 +335,20 @@ def filter_by_user(user_id):
 @cross_origin()
 def filter_by_suburb(suburb):
     response = {}
-
     with sqlite3.connect("dbFindProperty.db") as conn:
         cursor = conn.cursor()
         cursor.execute("SELECT * FROM tblProperty WHERE address LIKE'%"+suburb+"%'")
+        response["data"] = cursor.fetchall()
+    return response
+
+
+@app.route('/property-by-listingtype/<type>/')
+@cross_origin()
+def filter_by_type(type):
+    response = {}
+    with sqlite3.connect("dbFindProperty.db") as conn:
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM tblProperty WHERE listing_type=?", type)
         response["data"] = cursor.fetchall()
     return response
 
@@ -349,10 +359,9 @@ def filter_by_type(type):
     response = {}
     with sqlite3.connect("dbFindProperty.db") as conn:
         cursor = conn.cursor()
-        cursor.execute("SELECT * FROM tblProperty WHERE listing_type=?", type)
+        cursor.execute("SELECT * FROM tblProperty WHERE property_type=?", type)
         response["data"] = cursor.fetchall()
     return response
-
 
 # ========================================== FUNCTIONS FOR UPDATING AGENT, USER AND PROPERTY ============================================================
 
