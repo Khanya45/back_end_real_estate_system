@@ -348,7 +348,7 @@ def filter_by_listingtype(type):
     response = {}
     with sqlite3.connect("dbFindProperty.db") as conn:
         cursor = conn.cursor()
-        cursor.execute("SELECT * FROM tblProperty WHERE listing_type=?", type)
+        cursor.execute("SELECT * FROM tblProperty WHERE listing_type=?", [type])
         response["data"] = cursor.fetchall()
     return response
 
@@ -359,7 +359,7 @@ def filter_by_type(type):
     response = {}
     with sqlite3.connect("dbFindProperty.db") as conn:
         cursor = conn.cursor()
-        cursor.execute("SELECT * FROM tblProperty WHERE property_type=?", type)
+        cursor.execute("SELECT * FROM tblProperty WHERE property_type=?", [type])
         response["data"] = cursor.fetchall()
     return response
 
