@@ -740,11 +740,11 @@ def filter_by_price(from_price, to_price):
 #             conn.commit()
 
 
-# with sqlite3.connect('dbFindProperty.db') as conn:
-#             cur = conn.cursor()
-#             cur.execute('SELECT * FROM tblProperty')
-#             date = cur.fetchall()
-#             print(date)
+with sqlite3.connect('dbFindProperty.db') as conn:
+            cur = conn.cursor()
+            cur.execute('SELECT * FROM tblAgent')
+            date = cur.fetchall()
+            print(date)
 
 # with sqlite3.connect('dbFindProperty.db') as conn:
 #             cur = conn.cursor()
