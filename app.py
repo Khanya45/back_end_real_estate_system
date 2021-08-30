@@ -297,10 +297,14 @@ def get_listings(agent_id):
         cursor = conn.cursor()
         cursor.execute('SELECT COUNT(*) FROM tblProperty WHERE agent_id =? GROUP BY listing_type', [agent_id])
         listings = cursor.fetchall()
-        rental = listings[0][0]
-        sale = listings[1][0]
-        response["sale_listing"] = sale
-        response["rental_listing"] = rental
+        if listings == []:
+            rental = 0
+            sale = 0
+        else:
+            rental = listings[0][0]
+            sale = listings[1][0]
+    response["sale_listing"] = sale
+    response["rental_listing"] = rental
     return response
 
 
@@ -740,11 +744,11 @@ def filter_by_price(from_price, to_price):
 #             conn.commit()
 
 
-with sqlite3.connect('dbFindProperty.db') as conn:
-            cur = conn.cursor()
-            cur.execute('SELECT * FROM tblAgent')
-            date = cur.fetchall()
-            print(date)
+# with sqlite3.connect('dbFindProperty.db') as conn:
+#             cur = conn.cursor()
+#             cur.execute('SELECT * FROM tblAgent')
+#             date = cur.fetchall()
+#             print(date)
 
 # with sqlite3.connect('dbFindProperty.db') as conn:
 #             cur = conn.cursor()
@@ -779,3 +783,17 @@ with sqlite3.connect('dbFindProperty.db') as conn:
 #
 #
 # get_data()
+# response = {}
+# with sqlite3.connect("dbFindProperty.db") as conn:
+#     cursor = conn.cursor()
+#     cursor.execute('SELECT COUNT(*) FROM tblProperty WHERE agent_id =2 GROUP BY listing_type')
+#     listings = cursor.fetchall()
+#     if listings == []:
+#         rental = 0
+#         sale = 0
+#     else:
+#         rental = listings[0][0]
+#         sale = listings[1][0]
+#     response["sale_listing"] = sale
+#     response["rental_listing"] = rental
+# print(response)
