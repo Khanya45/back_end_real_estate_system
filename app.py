@@ -773,4 +773,9 @@ def filter_by_price(from_price, to_price):
 #     response["data"] = cursor.fetchall()
 # print(response)
 
-
+#
+# def get_data():
+#     return url_for(get_agents)
+#
+#
+# get_data()
