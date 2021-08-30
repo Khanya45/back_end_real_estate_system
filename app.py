@@ -147,12 +147,12 @@ def agent_registration():
         location = request.json['location']
         mobile = request.json['mobile']
         image = request.json['image']
-        if is_string(fullname) == True or length(fullname, password, email, estate_agent, location, mobile, image) == True:
+        if length(fullname, password, email, estate_agent, location, mobile, image) == True:
             objAgent = clsAgent(fullname, password, email, estate_agent, location, image, mobile)
             objAgent.agent_registration()
             response["message"] = "agent successfully added"
             response["status_code"] = 201
-        else:
+        else: is_string(fullname) == True or
             response['message'] = "Invalid characters"
             response['status_code'] = 400
 
