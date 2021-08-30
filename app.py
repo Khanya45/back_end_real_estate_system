@@ -152,7 +152,7 @@ def agent_registration():
             objAgent.agent_registration()
             response["message"] = "agent successfully added"
             response["status_code"] = 201
-        else: is_string(fullname) == True or
+        else:
             response['message'] = "Invalid characters"
             response['status_code'] = 400
 
