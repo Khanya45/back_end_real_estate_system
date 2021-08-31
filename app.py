@@ -445,7 +445,7 @@ def edit_agent(id):
                 if is_number(put_data["fullname"]) == False:
                     with sqlite3.connect('dbFindProperty.db') as conn:
                         cursor = conn.cursor()
-                        cursor.execute("UPDATE tblUser SET fullname =? WHERE agent_id=?", (put_data["fullname"], id))
+                        cursor.execute("UPDATE tblAgent SET fullname =? WHERE agent_id=?", (put_data["fullname"], id))
                         conn.commit()
                         response['message'] = "successful"
                         response['status_code'] = 200
@@ -459,7 +459,7 @@ def edit_agent(id):
 
                     with sqlite3.connect('dbFindProperty.db') as conn:
                         cursor = conn.cursor()
-                        cursor.execute("UPDATE tblUser SET email =? WHERE agent_id=?", (put_data["email"], id))
+                        cursor.execute("UPDATE tblAgent SET email =? WHERE agent_id=?", (put_data["email"], id))
                         conn.commit()
 
                         response["content"] = "successful"
@@ -474,7 +474,7 @@ def edit_agent(id):
 
                     with sqlite3.connect('dbFindProperty.db') as conn:
                         cursor = conn.cursor()
-                        cursor.execute("UPDATE tblUser SET password =? WHERE agent_id=?", (put_data["password"], id))
+                        cursor.execute("UPDATE tblAgent SET password =? WHERE agent_id=?", (put_data["password"], id))
                         conn.commit()
 
                         response["content"] = "successful"
