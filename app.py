@@ -179,10 +179,10 @@ class clsProperty:
 
 
 # ADDING PROPERTY ON THE TABLE
-@app.route('/add_property/<int:id>/', methods=["POST"])
+@app.route('/add_property/', methods=["POST"])
 @cross_origin()
 # @jwt_required()
-def add_property(id):
+def add_property():
     response = {}
 
     if request.method == 'POST':
