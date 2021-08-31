@@ -179,10 +179,10 @@ class clsProperty:
 
 
 # ADDING PROPERTY ON THE TABLE
-@app.route('/add_property/', methods=["POST"])
+@app.route('/add_property/<int:id>/', methods=["POST"])
 @cross_origin()
 # @jwt_required()
-def add_property():
+def add_property(id):
     response = {}
 
     if request.method == 'POST':
@@ -678,18 +678,32 @@ def delete_agent(id):
 
 
 # # DELETE PROPERTY
-# @app.route("/delete-property/<id>/")
-# @cross_origin()
-# # @jwt_required()
-# def delete_property(id):
-#     response = {}
-#     with sqlite3.connect("dbFindProperty.db") as conn:
-#         cursor = conn.cursor()
-#         cursor.execute("DELETE FROM tblProperty WHERE property_id=?", id)
-#         conn.commit()
-#         response['status_code'] = 200
-#         response['message'] = "blog post deleted successfully."
-#     return response
+@app.route("/update-agent-id/<int:agent_id>/")
+@cross_origin()
+# @jwt_required()
+def update_agent_id(agent_id):
+    response = {}
+    with sqlite3.connect('dbFindProperty.db') as conn:
+        cur = conn.cursor()
+        cur.execute('UPDATE tblProperty SET agent_id =? WHERE property_id=last', [agent_id])
+        conn.commit()
+        response['status_code'] = 200
+        response['message'] = "blog post deleted successfully."
+    return response
+
+
+@app.route("/update-user-id/<int:user_id>/")
+@cross_origin()
+# @jwt_required()
+def update_user_id(user_id):
+    response = {}
+    with sqlite3.connect('dbFindProperty.db') as conn:
+        cur = conn.cursor()
+        cur.execute('UPDATE tblProperty SET user_id =? WHERE property_id=(SELECT last_insert_id())', [user_id])
+        conn.commit()
+        response['status_code'] = 200
+        response['message'] = "blog post deleted successfully."
+    return response
 
 
 @app.route("/delete-property/<id>/")
@@ -752,7 +766,7 @@ def filter_by_price(from_price, to_price):
 
 # with sqlite3.connect('dbFindProperty.db') as conn:
 #             cur = conn.cursor()
-#             cur.execute('UPDATE tblProperty SET agent_id = 1 WHERE property_id=3')
+#             cur.execute('UPDATE tblProperty SET user_id =1 WHERE property_id=(SELECT last_insert_rowid())')
 #             conn.commit()
 
 # with sqlite3.connect('dbFindProperty.db') as conn:
@@ -770,12 +784,12 @@ def filter_by_price(from_price, to_price):
 #     conn.commit()
 
 # response = {}
-# suburb = "Morningside"
+# # suburb = "Morningside"
 # with sqlite3.connect("dbFindProperty.db") as conn:
 #     cursor = conn.cursor()
-#     cursor.execute("SELECT * FROM tblProperty WHERE address LIKE'%"+suburb+"%'")
+#     cursor.execute("SELECT * FROM tblProperty WHERE property_id = 8")
 #     response["data"] = cursor.fetchall()
-# print(response)
+#     print(response)
 
 #
 # def get_data():
