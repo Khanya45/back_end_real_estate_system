@@ -329,7 +329,7 @@ def filter_by_user(user_id):
 
     with sqlite3.connect("dbFindProperty.db") as conn:
         cursor = conn.cursor()
-        cursor.execute("SELECT * FROM tblProperty WHERE agent_id=?", [user_id])
+        cursor.execute("SELECT * FROM tblProperty WHERE user_id=?", [user_id])
         response["data"] = cursor.fetchall()
     return response
 
