@@ -174,7 +174,7 @@ class clsProperty:
                 cur = conn.cursor()
                 cur.execute('SELECT DATE()')
                 date = cur.fetchone()
-                cur.execute('INSERT INTO tblProperty ( date, property_type, description, price, listing_type, address, image) VALUES(?,?,?,?,?,?,?)', (date, self.property_type, self.description, self.price, self.listing_type, self.address, self.image))
+                cur.execute('INSERT INTO tblProperty ( date, property_type, description, price, listing_type, address, image) VALUES(?,?,?,?,?,?,?)', (date, str(self.property_type), str(self.description), float(self.price), str(self.listing_type), str(self.address), str(self.image)))
                 conn.commit()
 
 
