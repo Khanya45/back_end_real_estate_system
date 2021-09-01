@@ -715,13 +715,13 @@ def delete_property(id):
                 conn.commit()
 
 
-@app.route("/filter-by-price/<from_price>/<to_price>/")
+@app.route("/filter-by-price/<from_price>/<to_price>/<suburb>/")
 @cross_origin()
-def filter_by_price(from_price, to_price):
+def filter_by_price(from_price, to_price, suburb):
     response = {}
     with sqlite3.connect("dbFindProperty.db") as conn:
         cursor = conn.cursor()
-        cursor.execute("SELECT price FROM tblProperty WHERE price BETWEEN " + from_price + " AND " + to_price)
+        cursor.execute("SELECT price FROM tblProperty WHERE address LIKE'%"+suburb+"%' AND price BETWEEN " + from_price + " AND " + to_price)
         properties = cursor.fetchall()
         response['status_code'] = 200
         response['data'] = properties
