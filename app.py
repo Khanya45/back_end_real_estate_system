@@ -253,9 +253,9 @@ def get_properties():
 
 
 #  ==================================== SENDING EMAIL TO THE AGENT ==========================
-@app.route('/send-email/<int:agent_id>', methods=['POST'])
+@app.route('/send-email/<int:agent_id>/<body>/', methods=['POST'])
 @cross_origin()
-def send_email(agent_id):
+def send_email(agent_id,body):
     response = {}
     if request.method == "POST":
         email = request.json['email']
@@ -272,7 +272,6 @@ def send_email(agent_id):
             msg['From'] = sender_email_id
             msg['To'] = receiver_email_id
             msg['Subject'] = subject
-            body = f'I would love to check out the property. Call me when you have time'
             msg.attach(MIMEText(body, 'plain'))
             text = msg.as_string()
             s = smtplib.SMTP('smtp.gmail.com', 587)
@@ -722,7 +721,7 @@ def filter_by_price(from_price, to_price):
     response = {}
     with sqlite3.connect("dbFindProperty.db") as conn:
         cursor = conn.cursor()
-        cursor.execute("SELECT price FROM tblProperty WHERE price BETWEEN" + from_price + "AND" + to_price)
+        cursor.execute("SELECT price FROM tblProperty WHERE price BETWEEN " + from_price + " AND " + to_price)
         properties = cursor.fetchall()
         response['status_code'] = 200
         response['data'] = properties
