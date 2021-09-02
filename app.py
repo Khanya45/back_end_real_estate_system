@@ -174,7 +174,7 @@ class clsProperty:
                 cur = conn.cursor()
                 cur.execute('SELECT DATE()')
                 date = cur.fetchone()
-                cur.execute('INSERT INTO tblProperty ( date, property_type, description, price, listing_type, address, image) VALUES(?,?,?,?,?,?,?)', (date, self.property_type, self.description, float(self.price), self.listing_type, self.address, self.image))
+                cur.execute('INSERT INTO tblProperty ( date, property_type, description, price, listing_type, address, image) VALUES(?,?,?,?,?,?,?)', (date[0], self.property_type, self.description, float(self.price), self.listing_type, self.address, self.image,))
                 conn.commit()
 
 
@@ -192,7 +192,7 @@ def add_property():
         image = request.json['image']
         listing_type = request.json['listing_type']
         address = request.json['address']
-        if is_string(property_type) == True or length(property_type, description, listing_type, address, image) == True or is_number(price):
+        if is_string(property_type) is True or length(property_type, description, listing_type, address, image) is True or is_number(price):
             objProperty = clsProperty(property_type, description, price, listing_type, address, image)
             objProperty.add_property()
             response["status_code"] = 201
@@ -201,7 +201,7 @@ def add_property():
         else:
             response["message"] = "Unsuccessful. Incorrect credentials"
             response["status_code"] = 400
-
+        # print(objProperty.add_property())
         return response
 
 
@@ -810,3 +810,9 @@ def filter_by_price(from_price, to_price, suburb):
 #     response["sale_listing"] = sale
 #     response["rental_listing"] = rental
 # print(response)
+
+with sqlite3.connect('dbFindProperty.db') as conn:
+    cur = conn.cursor()
+    cur.execute('SELECT DATE()')
+    date = cur.fetchone()
+print(date[0])
