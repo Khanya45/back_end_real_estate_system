@@ -765,7 +765,7 @@ def filter_by_price(from_price, to_price, suburb):
 
 # with sqlite3.connect('dbFindProperty.db') as conn:
 #             cur = conn.cursor()
-#             cur.execute('UPDATE tblProperty SET user_id =1 WHERE property_id=(SELECT last_insert_rowid())')
+#             cur.execute('UPDATE tblProperty SET property_type = "flats&apartments" WHERE property_id=9')
 #             conn.commit()
 
 # with sqlite3.connect('dbFindProperty.db') as conn:
