@@ -196,7 +196,7 @@ def add_property():
             objProperty = clsProperty(property_type, description, price, listing_type, address, image)
             objProperty.add_property()
             response["status_code"] = 201
-            response['description'] = "Book added succesfully"
+            response['description'] = "property added succesfully"
 
         else:
             response["message"] = "Unsuccessful. Incorrect credentials"
@@ -285,6 +285,16 @@ def send_email(agent_id,body):
         return response
 
 
+# Dear Frustrated Homeowner,
+#
+# f'Does it seem like your home will never sell?\
+# Few people truly understand the frustrations you face trying to sell your home. Perhaps you’re in between jobs and\
+# need to start renting. Or maybe you want to buy your next home, but you feel paralyzed because you need to sell this home first.\
+# Maybe you’ve dropped your life savings into this home. And because of the lousy economy or unscrupulous people, you’re\
+# now trying to get your money out. The clock is ticking … and with each tick, you lose more and more of your hard-earned money.\
+# My name is <<Your Name>>, and I am a REALTOR® specializing in difficult-to-sell properties.\
+# In Over <<10>> Years of Marketing “Hard-to-Sell” Properties, I’ve Learned a Few Things About Why YOUR Home Is NOT Selling …\
+# Each home is different and has special problems that make selling it difficult.'\
 # =================== FUNCTION FOR GETTING LISTINGS OF  AN AGENT ===================
 
 @app.route('/get-listings/<int:agent_id>/', methods=["GET"])
@@ -317,6 +327,18 @@ def filter_by_agent(agent_id):
     with sqlite3.connect("dbFindProperty.db") as conn:
         cursor = conn.cursor()
         cursor.execute("SELECT * FROM tblProperty WHERE agent_id=?", [agent_id])
+        response["data"] = cursor.fetchall()
+    return response
+
+
+@app.route('/get-agent-info/<int:agent_id>/')
+@cross_origin()
+def get_agent_info(agent_id):
+    response = {}
+
+    with sqlite3.connect("dbFindProperty.db") as conn:
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM tblAgent WHERE agent_id=?", [agent_id])
         response["data"] = cursor.fetchall()
     return response
 
@@ -811,8 +833,8 @@ def filter_by_price(from_price, to_price, suburb):
 #     response["rental_listing"] = rental
 # print(response)
 
-with sqlite3.connect('dbFindProperty.db') as conn:
-    cur = conn.cursor()
-    cur.execute('SELECT DATE()')
-    date = cur.fetchone()
-print(date[0])
+# with sqlite3.connect('dbFindProperty.db') as conn:
+#     cur = conn.cursor()
+#     cur.execute('SELECT DATE()')
+#     date = cur.fetchone()
+# print(date[0])
