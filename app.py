@@ -338,7 +338,9 @@ def get_agent_info(agent_id):
 
     with sqlite3.connect("dbFindProperty.db") as conn:
         cursor = conn.cursor()
+        cursor.execute('UPDATE tblProperty SET agent_id =? WHERE property_id=(select last_insert_rowid())', [agent_id])
         cursor.execute("SELECT * FROM tblAgent WHERE agent_id=?", [agent_id])
+        conn.commit()
         response["data"] = cursor.fetchall()
     return response
 
