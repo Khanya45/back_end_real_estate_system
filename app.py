@@ -568,7 +568,7 @@ def edit_agent(id):
 
 
 # ======================================= UPDATING PROPERTY =====================================================
-@app.route('/edit-agent/<id>/', methods=["PUT"])
+@app.route('/edit-property/<id>/', methods=["PUT"])
 @cross_origin()
 # @jwt_required()
 def edit_property(id):
