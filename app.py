@@ -786,10 +786,10 @@ def filter_by_price(from_price, to_price, suburb):
 #             date = cur.fetchall()
 #             print(date)
 
-# with sqlite3.connect('dbFindProperty.db') as conn:
-#             cur = conn.cursor()
-#             cur.execute('UPDATE tblProperty SET property_type = "flats&apartments" WHERE property_id=9')
-#             conn.commit()
+with sqlite3.connect('dbFindProperty.db') as conn:
+            cur = conn.cursor()
+            cur.execute('UPDATE tblProperty SET user_id = 2 WHERE property_id=8')
+            conn.commit()
 
 # with sqlite3.connect('dbFindProperty.db') as conn:
 #             cur = conn.cursor()
