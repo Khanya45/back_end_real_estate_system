@@ -594,8 +594,7 @@ def edit_property(id):
             # ===================== UPDATING EMAIL =================================
             if incoming_data.get("price") is not None:
                 put_data['price'] = incoming_data.get('price')
-                if length(put_data["price"]) == True:
-
+                if is_string(put_data["price"]) == True:
                     with sqlite3.connect('dbFindProperty.db') as conn:
                         cursor = conn.cursor()
                         cursor.execute("UPDATE tblProperty SET price =? WHERE property_id=?", (put_data["price"], id))
