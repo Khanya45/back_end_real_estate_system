@@ -160,21 +160,41 @@ def agent_registration():
 
 
 class clsProperty:
-    def __init__(self, property_type, description, price, listing_type, address, image):
+    def __init__(self, property_type, description, price, listing_type, address, image, user_id, agent_id):
         self.property_type = property_type
         self.description = description
         self.price = price
         self.image = image
         self.listing_type = listing_type
         self.address = address
+        self.user_id = user_id
+        self.agent_id = agent_id
 
 
-    def add_property(self):
+    def add_property_ids(self):
             with sqlite3.connect('dbFindProperty.db') as conn:
                 cur = conn.cursor()
                 cur.execute('SELECT DATE()')
                 date = cur.fetchone()
-                cur.execute('INSERT INTO tblProperty ( date, property_type, description, price, listing_type, address, image) VALUES(?,?,?,?,?,?,?)', (date[0], self.property_type, self.description, float(self.price), self.listing_type, self.address, self.image,))
+                cur.execute('INSERT INTO tblProperty (agent_id, user_id, date, property_type, description, price, listing_type, address, image) VALUES(?,?,?,?,?,?,?,?,?)', (self.agent_id, self.user_id, date[0], self.property_type, self.description, float(self.price), self.listing_type, self.address, self.image,))
+                conn.commit()
+
+
+    def add_property_agent(self):
+            with sqlite3.connect('dbFindProperty.db') as conn:
+                cur = conn.cursor()
+                cur.execute('SELECT DATE()')
+                date = cur.fetchone()
+                cur.execute('INSERT INTO tblProperty (agent_id, date, property_type, description, price, listing_type, address, image) VALUES(?,?,?,?,?,?,?,?)', (self.agent_id, date[0], self.property_type, self.description, float(self.price), self.listing_type, self.address, self.image,))
+                conn.commit()
+
+
+    def add_property_user(self):
+            with sqlite3.connect('dbFindProperty.db') as conn:
+                cur = conn.cursor()
+                cur.execute('SELECT DATE()')
+                date = cur.fetchone()
+                cur.execute('INSERT INTO tblProperty (user_id, date, property_type, description, price, listing_type, address, image) VALUES(?,?,?,?,?,?,?,?)', (self.agent_id, date[0], self.property_type, self.description, float(self.price), self.listing_type, self.address, self.image,))
                 conn.commit()
 
 
@@ -184,26 +204,86 @@ class clsProperty:
 # @jwt_required()
 def add_property():
     response = {}
-
     if request.method == 'POST':
+        need_agent = request.json['needAgent']
+        property_type = request.json['property_type']
         property_type = request.json['property_type']
         description = request.json['description']
         price = request.json['price']
         image = request.json['image']
+        user_id = request.json['user_id']
+        agent_id = request.json['agent_id']
         listing_type = request.json['listing_type']
         address = request.json['address']
         if is_string(property_type) is True or length(property_type, description, listing_type, address, image) is True or is_number(price):
-            objProperty = clsProperty(property_type, description, price, listing_type, address, image)
-            objProperty.add_property()
+            objProperty = clsProperty(property_type, description, price, listing_type, address, image, user_id, agent_id)
+            if need_agent == "Yes":
+                objProperty.add_property_ids()
+            elif need_agent == "No":
+                objProperty.add_property_user()
+            else:
+                objProperty.add_property_agent()
             response["status_code"] = 201
             response['description'] = "property added succesfully"
 
         else:
             response["message"] = "Unsuccessful. Incorrect credentials"
             response["status_code"] = 400
-        # print(objProperty.add_property())
         return response
 
+
+# ADDING PROPERTY ON THE TABLE
+# @app.route('/add_property_agent/', methods=["POST"])
+# @cross_origin()
+# # @jwt_required()
+# def add_property():
+#     response = {}
+#     if request.method == 'POST':
+#         property_type = request.json['property_type']
+#         property_type = request.json['property_type']
+#         description = request.json['description']
+#         price = request.json['price']
+#         image = request.json['image']
+#         listing_type = request.json['listing_type']
+#         address = request.json['address']
+#         if is_string(property_type) is True or length(property_type, description, listing_type, address, image) is True or is_number(price):
+#             objProperty = clsProperty(property_type, description, price, listing_type, address, image)
+#             objProperty.add_property_agent()
+#             response["status_code"] = 201
+#             response['description'] = "property added succesfully"
+#
+#         else:
+#             response["message"] = "Unsuccessful. Incorrect credentials"
+#             response["status_code"] = 400
+#         # print(objProperty.add_property())
+#         return response
+#
+#
+#     # ADDING PROPERTY ON THE TABLE
+# @app.route('/add_property_agent/', methods=["POST"])
+# @cross_origin()
+# # @jwt_required()
+# def add_property():
+#     response = {}
+#     if request.method == 'POST':
+#         property_type = request.json['property_type']
+#         property_type = request.json['property_type']
+#         description = request.json['description']
+#         price = request.json['price']
+#         image = request.json['image']
+#         listing_type = request.json['listing_type']
+#         address = request.json['address']
+#         if is_string(property_type) is True or length(property_type, description, listing_type, address, image) is True or is_number(price):
+#             objProperty = clsProperty(property_type, description, price, listing_type, address, image)
+#             objProperty.add_property_user()
+#             response["status_code"] = 201
+#             response['description'] = "property added succesfully"
+#
+#         else:
+#             response["message"] = "Unsuccessful. Incorrect credentials"
+#             response["status_code"] = 400
+#         # print(objProperty.add_property())
+#         return response
 
 # ============================================== ALL FUNCTIONS FOR GETTING ALL ITEMS ======================================
 
