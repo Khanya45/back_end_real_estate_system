@@ -707,10 +707,10 @@ def update_agent_id(agent_id):
     response = {}
     with sqlite3.connect('dbFindProperty.db') as conn:
         cur = conn.cursor()
-        cur.execute('UPDATE tblProperty SET agent_id =? WHERE property_id=last', [agent_id])
+        cur.execute('UPDATE tblProperty SET agent_id =? WHERE property_id=(SELECT last_insert_rowid())', [agent_id])
         conn.commit()
         response['status_code'] = 200
-        response['message'] = "blog post deleted successfully."
+        response['message'] = "updated successfully."
     return response
 
 
@@ -751,19 +751,16 @@ def filter_by_price(from_price, to_price, suburb):
     return response
 
 
-# description = f' One of two adjacent units, this is ideal townhouse style living in the always popular Upper Green Point area.\
-#                     Multi level lock up and go home perfect for a family or professionals looking for extra space.\
-#                     At 312sqm space in size, this home provides space in all aspects, from the large light filled bedrooms \
-#                     on the top floor, down to the middle level which consists of the open plan kitchen, dining and lounge area that flows out onto \
-#                     the balcony and side yard space that have magnificent views out to the sea and Robben Island beyond.\
-#                     2 Bathrooms on the upper level (Main en-suite) and bonus guest loo on the middle level makes for perfect\
-#                     entertaining downstairs while keeping the privacy upstairs.North facing so plenty of sunlight and potential for \
-#                     cosmetic changes to really make this property pop!Lower level has an entrance way with double garage direct access \
-#                     and plenty of space in front of the garages for further parking.\
-#                     3 Bed\
-#                     2,5 Bath\
-#                     2 Garages'
-# #
+
+# description = f'Warm and welcoming cottage home . Recently renovated, an ideal home for a young family or someone thinking of down scaling.\
+# A split level and open plan lounge and dining room flows out to a sunny, north facing veranda overlooking an established indigenous\
+# garden with mountains as a backdrop, it feels as if you are in the countryside. During winter enjoy the warmth from a wood-burning stove.\
+# Contemporary kitchen, gas connection, plumbing for dish washer, separate laundry room. 2 bedrooms, spacious study or potential 3rd bedroom.\
+# Modern bathroom. Separate toilet. Solar geyser. Water storage. Double garage with direct access or single garage with studio workshop,\
+# off street parking. Baboon proof vegetable garden!\
+# This is indeed a little gem of a home, tucked away in the friendly suburb of Welcome Glen. The newly built Harbour Bay Shopping Mall with\
+# leading retail shops, restaurants and Medical Clinic is a short distance away and Glen Beach and tidal pool are also close by.'
+
 # with sqlite3.connect('dbFindProperty.db') as conn:
 #             cur = conn.cursor()
 #             cur.execute('SELECT DATE()')
@@ -776,7 +773,7 @@ def filter_by_price(from_price, to_price, suburb):
 #                         'listing_type,'
 #                         ' address, '
 #                         'image,'
-#                         'date) VALUES(?,?,?,?,?,?,?)', ("townhouse", description,  7495000, "sale", "Green Point", "https://prppublicstore.blob.core.windows.net/live-za-images/property/128/28/6856128/images/property-6856128-137752_dhd.jpg", date))
+#                         'date) VALUES(?,?,?,?,?,?,?)', ("house", description,  2195000, "sale", "Welcome Glen, Simons Town", "https://prppublicstore.blob.core.windows.net/live-za-images/property/421/18/7936421/images/property-7936421-16545188_sd.jpg", date))
 #             conn.commit()
 
 
@@ -786,10 +783,10 @@ def filter_by_price(from_price, to_price, suburb):
 #             date = cur.fetchall()
 #             print(date)
 
-with sqlite3.connect('dbFindProperty.db') as conn:
-            cur = conn.cursor()
-            cur.execute('UPDATE tblProperty SET user_id = 2 WHERE property_id=8')
-            conn.commit()
+# with sqlite3.connect('dbFindProperty.db') as conn:
+#             cur = conn.cursor()
+#             cur.execute('UPDATE tblProperty SET user_id =1 WHERE property_id=10')
+#             conn.commit()
 
 # with sqlite3.connect('dbFindProperty.db') as conn:
 #             cur = conn.cursor()
@@ -836,6 +833,6 @@ with sqlite3.connect('dbFindProperty.db') as conn:
 
 # with sqlite3.connect('dbFindProperty.db') as conn:
 #     cur = conn.cursor()
-#     cur.execute('SELECT DATE()')
+#     cur.execute('SELECT last_insert_rowid() FROM tblProperty')
 #     date = cur.fetchone()
 # print(date[0])
