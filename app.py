@@ -383,10 +383,12 @@ def send_email(agent_id,body):
         try:
             with sqlite3.connect("dbFindProperty.db") as conn:
                 cursor = conn.cursor()
-                cursor.execute("SELECT email FROM tblAgent WHERE agent_id=", agent_id)
+                cursor.execute("SELECT email FROM tblAgent WHERE agent_id=?", [agent_id])
                 agent_email = cursor.fetchone()
+
             sender_email_id = email
-            receiver_email_id = agent_email
+            receiver_email_id = agent_email[0]
+            print(receiver_email_id)
             password = "GETRICHWITHLOTTO"
             subject = "I am interested on the property"
             msg = MIMEMultipart()
