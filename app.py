@@ -800,7 +800,7 @@ def delete_user(id):
     response = {}
     with sqlite3.connect("dbFindProperty.db") as conn:
         cursor = conn.cursor()
-        cursor.execute("DELETE FROM tblUser WHERE user_id=?", id)
+        cursor.execute("DELETE FROM tblUser WHERE user_id=?", [id])
         conn.commit()
         response['status_code'] = 200
         response['message'] = "blog post deleted successfully."
@@ -815,7 +815,7 @@ def delete_agent(id):
     response = {}
     with sqlite3.connect("dbFindProperty.db") as conn:
         cursor = conn.cursor()
-        cursor.execute("DELETE FROM tblAgent WHERE agent_id=?", id)
+        cursor.execute("DELETE FROM tblAgent WHERE agent_id=?", [id])
         conn.commit()
         response['status_code'] = 200
         response['message'] = "blog post deleted successfully."
@@ -857,7 +857,7 @@ def update_user_id(user_id):
 def delete_property(id):
     with sqlite3.connect('dbFindProperty.db') as conn:
                 cur = conn.cursor()
-                cur.execute('UPDATE tblProperty SET agent_id = 1 WHERE property_id=3')
+                cur.execute("DELETE FROM tblAgent WHERE property_id=?", [id])
                 conn.commit()
 
 
